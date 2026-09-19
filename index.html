@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゼミ議論ボード</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>ゼミ議論ボード</h1>
+
+    <p>ゼミで思ったこと・アイデア・疑問などを自由に共有しよう。</p>
+
+   <h2>テーマ</h2>
+
+<div class="theme-list">
+
+    <button onclick="selectTheme('あすLABO(商店街)')">
+    あすLABO(商店街)
+</button>
+
+<button onclick="selectTheme('団地イベント')">
+    団地イベント
+</button>
+
+<button onclick="selectTheme('共同論文')">
+    共同論文
+</button>
+
+<button onclick="selectTheme('その他')">
+    その他
+</button>
+
+</div>
+
+<div id="theme-area"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

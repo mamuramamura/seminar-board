@@ -1,0 +1,202 @@
+body {
+    font-family: Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    background-color: #f5f6f8;
+    margin: 0;
+    padding: 40px;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 12px auto;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #eeeeee;
+}
+
+.theme-page {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.theme-page textarea {
+    width: 100%;
+    min-height: 100px;
+    box-sizing: border-box;
+    margin-top: 15px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.name-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.name-area input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.theme-page > button {
+    margin-top: 15px;
+}
+
+#opinion-list {
+    margin-top: 30px;
+}
+
+.opinion-card {
+    background: #f7f7f7;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.opinion-card strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.opinion-card p {
+    text-align: left;
+    margin: 0;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+.opinion-date {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+.opinion-actions {
+    margin-top: 12px;
+}
+
+.like-button {
+    width: auto;
+    display: inline-block;
+    margin: 0;
+    padding: 7px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.like-button:hover {
+    background: #f0f0f0;
+}
+
+/* 返信一覧 */
+.reply-list {
+    margin-top: 15px;
+    margin-left: 25px;
+    padding-left: 15px;
+    border-left: 3px solid #ddd;
+}
+
+/* 返信1件 */
+.reply-card {
+    background: #ffffff;
+    padding: 12px 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+
+/* 返信者の名前 */
+.reply-card strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* 返信本文 */
+.reply-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+/* 返信入力欄 */
+.reply-form {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f3f3f3;
+    border-radius: 8px;
+}
+
+.reply-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.reply-form textarea {
+    width: 100%;
+    min-height: 70px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+}
+
+/* 返信ボタン */
+.reply-button {
+    width: auto;
+    display: inline-block;
+    margin: 0 0 0 5px;
+    padding: 7px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: white;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.reply-button:hover {
+    background: #f0f0f0;
+}
