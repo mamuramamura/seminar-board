@@ -200,3 +200,68 @@ button:hover {
 .reply-button:hover {
     background: #f0f0f0;
 }
+
+/* =========================
+   スマートフォン表示
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        margin: 0;
+        padding: 15px;
+    }
+
+    .theme-page {
+        width: 100%;
+        max-width: none;
+        margin: 20px 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    /* 名前・匿名を縦並びにする */
+    .name-area {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .name-area input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* 投稿・返信の文章を読みやすく */
+    .opinion-card {
+        padding: 15px;
+    }
+
+    /* 返信のインデントをスマホでは小さくする */
+    .reply-list {
+        margin-left: 10px;
+        padding-left: 10px;
+    }
+
+    /* 共感・返信ボタン */
+    .opinion-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .like-button,
+    .reply-button {
+        margin: 0;
+    }
+
+    /* 返信フォーム */
+    .reply-form {
+        padding: 12px;
+    }
+
+    .reply-form input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

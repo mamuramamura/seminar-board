@@ -385,3 +385,59 @@ async function displayReplies(opinionId) {
         replyList.appendChild(replyCard);
     });
 }
+
+async function displayThemes() {
+
+    const themeList = document.getElementById("theme-list");
+
+    if (!themeList) {
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("themes")
+        .select("*")
+        .order("id", { ascending: true });
+
+    if (error) {
+        console.error(error);
+        themeList.innerHTML = "テーマの読み込みに失敗しました。";
+        return;
+    }
+
+    themeList.innerHTML = "";
+
+    data.forEach(function(theme) {
+
+        const button = document.createElement("button");
+
+        button.textContent = theme.name;
+
+        button.onclick = function() {
+            selectTheme(theme.name);
+        };
+
+        themeList.appendChild(button);
+    });
+}
+
+displayThemes();
+
+const opinionsChannel = supabaseClient
+    .channel("opinions-realtime")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "opinions"
+        },
+        function(payload) {
+            console.log("投稿に変更がありました", payload);
+
+            if (currentTheme !== "") {
+                displayOpinions();
+            }
+        }
+    )
+    .subscribe();
