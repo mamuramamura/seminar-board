@@ -441,3 +441,22 @@ const opinionsChannel = supabaseClient
         }
     )
     .subscribe();
+
+    const repliesChannel = supabaseClient
+    .channel("replies-realtime")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "replies"
+        },
+        function(payload) {
+            console.log("返信に変更がありました", payload);
+
+            if (payload.new && payload.new.opinion_id) {
+                displayReplies(payload.new.opinion_id);
+            }
+        }
+    )
+    .subscribe();
