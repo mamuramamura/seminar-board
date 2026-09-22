@@ -90,21 +90,28 @@ async function postOpinion() {
         return;
     }
 
-    const { error } = await supabaseClient
-        .from("opinions")
-        .insert([
-            {
-                theme: currentTheme,
-                name: name,
-                opinion: opinion
-            }
-        ]);
+    const { data, error } = await supabaseClient
+    .from("opinions")
+    .insert([
+        {
+            theme: currentTheme,
+            name: name,
+            opinion: opinion
+        }
+    ])
+    .select();
 
-    if (error) {
-        console.error(error);
-        alert("投稿に失敗しました");
-        return;
-    }
+   let myOpinions =
+    JSON.parse(localStorage.getItem("myOpinions")) || [];
+
+if (data && data.length > 0) {
+    myOpinions.push(data[0].id);
+
+    localStorage.setItem(
+        "myOpinions",
+        JSON.stringify(myOpinions)
+    );
+}
 
     alert("投稿しました！");
 
@@ -154,6 +161,15 @@ const isLiked = likedOpinions.includes(item.id);
 
 const likeIcon = isLiked ? "♥" : "♡";
 
+const myOpinions =
+    JSON.parse(localStorage.getItem("myOpinions")) || [];
+
+const isMyOpinion = myOpinions.includes(item.id);
+
+const deleteButton = isMyOpinion
+    ? `<button class="delete-button" onclick="deleteOpinion(${item.id})">🗑 削除</button>`
+    : "";
+
 const formattedDate = date.toLocaleString("ja-JP", {
     month: "numeric",
     day: "numeric",
@@ -181,6 +197,9 @@ newOpinion.innerHTML = `
     >
         💬 返信
     </button>
+
+    ${deleteButton}
+
 </div>
 
 <div id="reply-form-${item.id}" class="reply-form" style="display: none;">
@@ -314,21 +333,34 @@ async function postReply(opinionId) {
         return;
     }
 
-    const { error } = await supabaseClient
-        .from("replies")
-        .insert([
-            {
-                opinion_id: opinionId,
-                name: name,
-                reply: reply
-            }
-        ]);
+    const { data, error } = await supabaseClient
+    .from("replies")
+    .insert([
+        {
+            opinion_id: opinionId,
+            name: name,
+            reply: reply
+        }
+    ])
+    .select();
 
     if (error) {
         console.error(error);
         alert("返信の投稿に失敗しました");
         return;
     }
+
+    let myReplies =
+    JSON.parse(localStorage.getItem("myReplies")) || [];
+
+if (data && data.length > 0) {
+    myReplies.push(data[0].id);
+
+    localStorage.setItem(
+        "myReplies",
+        JSON.stringify(myReplies)
+    );
+}
 
     alert("返信しました！");
 
@@ -367,6 +399,15 @@ async function displayReplies(opinionId) {
         const replyCard = document.createElement("div");
         replyCard.className = "reply-card";
 
+        const myReplies =
+    JSON.parse(localStorage.getItem("myReplies")) || [];
+
+const isMyReply = myReplies.includes(item.id);
+
+const deleteButton = isMyReply
+    ? `<button class="delete-button" onclick="deleteReply(${item.id}, ${opinionId})">🗑 削除</button>`
+    : "";
+
         const date = new Date(item.created_at);
 
         const formattedDate = date.toLocaleString("ja-JP", {
@@ -377,10 +418,12 @@ async function displayReplies(opinionId) {
         });
 
         replyCard.innerHTML = `
-            <strong>${item.name}</strong>
-            <p>${item.reply}</p>
-            <span class="opinion-date">${formattedDate}</span>
-        `;
+    <strong>${item.name}</strong>
+    <p>${item.reply}</p>
+    <span class="opinion-date">${formattedDate}</span>
+
+    ${deleteButton}
+`;
 
         replyList.appendChild(replyCard);
     });
@@ -460,3 +503,86 @@ const opinionsChannel = supabaseClient
         }
     )
     .subscribe();
+
+    async function deleteOpinion(id) {
+
+    const confirmed = confirm("この投稿を削除しますか？");
+
+    if (!confirmed) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("opinions")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error(error);
+        alert("投稿の削除に失敗しました");
+        return;
+    }
+
+    // 自分の投稿一覧から削除
+    let myOpinions =
+        JSON.parse(localStorage.getItem("myOpinions")) || [];
+
+    myOpinions = myOpinions.filter(
+        opinionId => opinionId !== id
+    );
+
+    localStorage.setItem(
+        "myOpinions",
+        JSON.stringify(myOpinions)
+    );
+
+    // 共感履歴にも残っていたら削除
+    let likedOpinions =
+        JSON.parse(localStorage.getItem("likedOpinions")) || [];
+
+    likedOpinions = likedOpinions.filter(
+        opinionId => opinionId !== id
+    );
+
+    localStorage.setItem(
+        "likedOpinions",
+        JSON.stringify(likedOpinions)
+    );
+
+    await displayOpinions();
+}
+
+async function deleteReply(id, opinionId) {
+
+    const confirmed = confirm("この返信を削除しますか？");
+
+    if (!confirmed) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("replies")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error(error);
+        alert("返信の削除に失敗しました");
+        return;
+    }
+
+    // 自分の返信一覧から削除
+    let myReplies =
+        JSON.parse(localStorage.getItem("myReplies")) || [];
+
+    myReplies = myReplies.filter(
+        replyId => replyId !== id
+    );
+
+    localStorage.setItem(
+        "myReplies",
+        JSON.stringify(myReplies)
+    );
+
+    await displayReplies(opinionId);
+}
