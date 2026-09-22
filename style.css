@@ -265,3 +265,19 @@ button:hover {
         box-sizing: border-box;
     }
 }
+
+.delete-button {
+    width: auto;
+    display: inline-block;
+    margin: 0 0 0 5px;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background: white;
+    box-shadow: none;
+    font-size: 12px;
+}
+
+.delete-button:hover {
+    background: #f0f0f0;
+}
